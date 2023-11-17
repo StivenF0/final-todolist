@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import HomePage from "./Home";
-import Task from "./Task";
+import TaskPage from "./Task";
 
 const router = createBrowserRouter([
   {
@@ -12,7 +12,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/task/",
-    element: <Task />,
+    element: <TaskPage />,
   },
 ]);
 
