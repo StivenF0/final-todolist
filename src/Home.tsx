@@ -1,7 +1,21 @@
 import { IonIcon } from "@ionic/react";
-import { alertCircleOutline, closeCircleOutline } from "ionicons/icons";
+import {
+  alertCircleOutline,
+  closeCircleOutline,
+  checkmarkOutline,
+} from "ionicons/icons";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
-const App = () => {
+const Home = () => {
+  const [checked, setChecked] = useState(false);
+  const handleChecking = () => {
+    return setChecked((currentCheck) => {
+      console.log(!currentCheck);
+      return !currentCheck;
+    });
+  };
+
   const formSubmit = (e: React.FormEvent) => {
     e.preventDefault();
   };
@@ -33,15 +47,29 @@ const App = () => {
         <div className="p-2" />
         <div className="max-w-xl w-full grid auto-rows-[56px] gap-4">
           {/* TASKS */}
-          <div className="w-full h-full grid grid-cols-[1fr,60px,60px] bg-neutral-200 rounded-lg">
-            <div className="self-center pl-[.72rem] whitespace-nowrap overflow-hidden text-ellipsis">
+          <div className="w-full h-full grid grid-cols-[60px,1fr,60px,60px] bg-neutral-200 rounded-lg">
+            <div
+              className="h-10 w-10 bg-white rounded-[50%] self-center ml-3 border border-neutral-400 grid place-content-center"
+              onClick={handleChecking}
+            >
+              {checked && (
+                <IonIcon className="text-2xl" icon={checkmarkOutline} />
+              )}
+            </div>
+            <div
+              className={`self-center pl-[.72rem] whitespace-nowrap overflow-hidden text-ellipsis ${
+                checked && `line-through`
+              }`}
+            >
               Task 1
             </div>
             <div className="flex items-center justify-center">
-              <IonIcon
-                className="text-2xl cursor-pointer"
-                icon={alertCircleOutline}
-              />
+              <Link
+                to={"/task/"}
+                className="text-2xl cursor-pointer grid place-content-center"
+              >
+                <IonIcon icon={alertCircleOutline} />
+              </Link>
             </div>
             <div className="flex items-center justify-center">
               <IonIcon
@@ -56,4 +84,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Home;
