@@ -1,15 +1,24 @@
-import { useState } from "react";
 import { TaskItem } from "./TaskItem";
+import { Task } from "../../types/task";
 
-const TaskItemElement = () => {
-  const [checked, setChecked] = useState(false);
+interface TaskItemElementProps extends Task {
+  checkTask: (id: string) => void;
+  deleteTask: (id: string) => void;
+}
 
+const TaskItemElement = ({
+  id,
+  title,
+  checked,
+  checkTask,
+  deleteTask,
+}: TaskItemElementProps) => {
   return (
     <TaskItem.Root>
-      <TaskItem.ButtonCheck checked={checked} setChecked={setChecked} />
-      <TaskItem.Title checked={checked}>Task 1</TaskItem.Title>
-      <TaskItem.ButtonInfo />
-      <TaskItem.ButtonDelete />
+      <TaskItem.ButtonCheck checked={checked} checkTask={checkTask} id={id} />
+      <TaskItem.Title checked={checked}>{title}</TaskItem.Title>
+      <TaskItem.ButtonInfo id={id} />
+      <TaskItem.ButtonDelete id={id} deleteTask={deleteTask} />
     </TaskItem.Root>
   );
 };
