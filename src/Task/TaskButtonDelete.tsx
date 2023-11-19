@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
+import { removeStoredTask } from "../web-backend/TaskPageHooks";
 
-const TaskButtonDelete = () => {
+interface TaskButtonDeleteProps {
+  id: string;
+}
+
+const TaskButtonDelete = ({ id }: TaskButtonDeleteProps) => {
   const handleDelete = () => {
-    console.log("delete");
-    return;
+    removeStoredTask(id);
   };
 
   return (
@@ -11,7 +15,7 @@ const TaskButtonDelete = () => {
       className="border-2 border-neutral-600 text-neutral-800 rounded-r-full border-l h-10 text-xl font-semibold"
       onClick={handleDelete}
     >
-      <Link to="/" className="h-full w-full">
+      <Link to="/" className="flex items-center justify-center h-full w-full">
         Delete
       </Link>
     </button>

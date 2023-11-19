@@ -1,11 +1,19 @@
 import { useState } from "react";
 import { Task } from "./Task";
+import { useLocalStorageTask, useQuery } from "../web-backend/TaskPageHooks";
+import { Navigate } from "react-router-dom";
+import { useLocalStorageTodoList } from "../web-backend/StorageHook";
 
 const TaskPage = () => {
+  const query = useQuery();
+  const id = query.get("id");
+  const { todoList } = useLocalStorageTodoList();
+  if (!id || !todoList.find((task) => task.id === id))
+    return <Navigate to={"/"} />;
+
   const [editing, setEditing] = useState(false);
-  const [checked, setChecked] = useState(false);
-  const [description, setDescription] = useState("");
-  const [title, setTitle] = useState("Task 1");
+  const { title, setTitle, description, setDescription, checked, setChecked } =
+    useLocalStorageTask(id);
 
   const getSize = () =>
     title.length <= 1 ? 1 : title.length > 25 ? 25 : title.length - 1;
@@ -13,25 +21,15 @@ const TaskPage = () => {
   return (
     <Task.Root>
       <Task.Head>
-        <Task.Checkbox checked={checked} setChecked={setChecked} />
-        <Task.Title
-          checked={checked}
-          editing={editing}
-          getSize={getSize}
-          setTitle={setTitle}
-          title={title}
-        />
-        <Task.ButtonEdit setEditing={setEditing} title={title} />
+        <Task.Checkbox {...{ checked, setChecked }} />
+        <Task.Title {...{ checked, editing, getSize, setTitle, title }} />
+        <Task.ButtonEdit {...{ setEditing, title }} />
       </Task.Head>
       <Task.Body>
-        <Task.Description
-          description={description}
-          editing={editing}
-          setDescription={setDescription}
-        />
+        <Task.Description {...{ description, editing, setDescription }} />
         <Task.ButtonsContainer>
           <Task.ButtonSave />
-          <Task.ButtonDelete />
+          <Task.ButtonDelete {...{ id }} />
         </Task.ButtonsContainer>
       </Task.Body>
     </Task.Root>
