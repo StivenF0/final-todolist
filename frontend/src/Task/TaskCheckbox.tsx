@@ -1,13 +1,15 @@
+import { checkTask } from "./actions/actionsTask";
+
 interface TaskCheckboxProps {
   checked: boolean;
-  setChecked: React.Dispatch<React.SetStateAction<boolean>>;
+  fetchTask: (id: string) => void;
+  id: string;
 }
 
-const TaskCheckbox = ({ checked, setChecked }: TaskCheckboxProps) => {
-  const handleChecking = () => {
-    return setChecked((currentCheck) => {
-      return !currentCheck;
-    });
+const TaskCheckbox = ({ id, checked, fetchTask }: TaskCheckboxProps) => {
+  const handleChange = async () => {
+    await checkTask(id);
+    fetchTask(id);
   };
 
   return (
@@ -15,8 +17,8 @@ const TaskCheckbox = ({ checked, setChecked }: TaskCheckboxProps) => {
       <input
         className="w-5 h-5"
         type="checkbox"
-        defaultChecked={checked}
-        onClick={handleChecking}
+        checked={checked}
+        onChange={handleChange}
       />
       <div className="p-2" />
     </>

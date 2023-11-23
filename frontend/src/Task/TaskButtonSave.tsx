@@ -1,20 +1,26 @@
+import { AxiosResponse } from "axios";
 import { Link } from "react-router-dom";
 
-const TaskButtonSave = () => {
-  const handleSave = () => {
-    console.log("save");
-    return;
+interface TaskButtonSaveProps {
+  id: string;
+  fetchTask: (id: string) => void;
+  updateTask: (id: string) => Promise<AxiosResponse<any, any>>;
+}
+
+const TaskButtonSave = ({ id, fetchTask, updateTask }: TaskButtonSaveProps) => {
+  const handleClick = async () => {
+    await updateTask(id);
+    fetchTask(id);
   };
 
   return (
-    <button
+    <Link
+      to="/"
       className="border-2 border-neutral-600 text-neutral-800 rounded-l-full border-r h-10 text-xl font-semibold"
-      onClick={handleSave}
+      onClick={handleClick}
     >
-      <Link to="/" className="h-full w-full">
-        Save
-      </Link>
-    </button>
+      <button className="h-full w-full">Save</button>
+    </Link>
   );
 };
 

@@ -8,7 +8,7 @@ const TaskItemElement = ({ id, title, checked }: TaskItemElementProps) => {
     <TaskItem.Root>
       <TaskItem.ButtonCheck {...{ checked, id }} />
       <TaskItem.Title {...{ checked }}>{title}</TaskItem.Title>
-      <TaskItem.ButtonInfo />
+      <TaskItem.ButtonInfo {...{ id }} />
       <TaskItem.ButtonDelete {...{ id }} />
     </TaskItem.Root>
   );

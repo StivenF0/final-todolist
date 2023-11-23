@@ -1,27 +1,26 @@
 interface TaskDescriptionProps {
-  description: string;
   editing: boolean;
+  description: string;
   setDescription: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const TaskDescription = ({
   description,
-  editing,
   setDescription,
+  editing,
 }: TaskDescriptionProps) => {
-  const handleChangeDescription = (e: React.SyntheticEvent) => {
-    const inputEl = e.target as HTMLTextAreaElement;
-    setDescription(inputEl.value);
+  const handleChange = (e: React.SyntheticEvent) => {
+    setDescription((e.target as HTMLTextAreaElement).value);
   };
 
   return (
     <>
       <textarea
         className="w-full resize-none focus:outline-none overflow-y-auto border-2 border-neutral-500 rounded-xl p-2 disabled:border-neutral-300"
-        value={description}
         rows={10}
         disabled={!editing}
-        onChange={handleChangeDescription}
+        onChange={handleChange}
+        value={description}
       ></textarea>
       <div className="p-2" />
     </>
